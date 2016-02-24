@@ -4,16 +4,23 @@
 CLS
 $myDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 
-
 function init
 
+{
+
+    #run Backup
+    Backup
+
+}
+
+
+#Proceed to Read from settings.xml and backup files
+function Backup
 {
 
     #-------------------------------------------------
     #  Variables
     #-------------------------------------------------
-
-
 
     # Import email settings from config file
     [xml]$ConfigFile = Get-Content "$MyDir\Settings.xml"
@@ -46,22 +53,11 @@ function init
 
 
             New-FolderCreator -path $backupFolder
-
-            Set-Robocopycopy -source $entry.Path -dest $backupFolder
-
-
-        
+            $log = "$myDir\log.txt"
+            Set-Robocopycopy -source $entry.Path -dest $backupFolder -log $log   
         }
-
     }
-
-
-
-
-
 }
-
-
 
 ## Copy without deleting source
 function Set-Robocopycopy
@@ -77,7 +73,7 @@ function Set-Robocopycopy
 		[string]$log = "log.txt"
 	)
 
-	$flags = '/E /R:3 /W:5 /log+:"' + $log + '"'
+	$flags = '/MIR /R:3 /W:5 /tee /np /log+:"' + $log + '"'
 	$cmd = 'ROBOCOPY "' + $source + '" "' + $dest + '" ' + $flags
 	invoke-expression $cmd
 }
