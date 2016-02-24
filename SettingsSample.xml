@@ -1,9 +1,18 @@
 <?xml version="1.0"?>
 <Settings>
 	<directory>
-		<path></path>
+		<name>Path1</name>
+		<path>c:\path\to\folder\you\want\to\backup</path>
+		<backup>1</backup>
 	</directory>
 	<directory>
-		<path></path>
+		<name>Path2</name>
+		<path>c:\path\to\second\folder\you\want\to\backup</path>
+		<backup>1</backup>
 	</directory>
+	
+	
+	<destination>
+		<path>C:\Backup\Location\Folder</path>
+	</destination>
 </Settings>
